@@ -12,6 +12,7 @@ export class QuizComponent implements OnInit {
   category = { id: 0, title: '' };
   questions: any;
   index: number = 0;
+  isLoading: boolean = false;
 
   constructor(private QuizService: QuestionsService) {}
 
@@ -20,11 +21,13 @@ export class QuizComponent implements OnInit {
   }
 
   getRandomQuestion() {
+    this.isLoading = true;
     this.QuizService.getRandomQuestions().subscribe((response) => {
       this.questions = response;
       this.question = this.questions[this.index].question;
       this.baseAnswer = this.questions[this.index].answer;
       this.category = this.questions[this.index].category;
+      this.isLoading = false;
       console.log(response);
     });
   }
