@@ -6,14 +6,11 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuizComponent } from './quiz/quiz.component';
 import { HttpClientModule } from '@angular/common/http';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FormatTimePipe } from './format-time.pipe';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    QuizComponent,
-  ],
+  declarations: [AppComponent, QuizComponent, FormatTimePipe],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,6 +19,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatProgressSpinnerModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
