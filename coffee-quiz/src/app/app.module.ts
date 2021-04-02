@@ -8,7 +8,10 @@ import { QuizComponent } from './quiz/quiz.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormatTimePipe } from './format-time.pipe';
-import {MatSliderModule} from '@angular/material/slider'
+import {MatSliderModule} from '@angular/material/slider';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,6 +23,9 @@ import {MatSliderModule} from '@angular/material/slider'
     HttpClientModule,
     MatProgressSpinnerModule,
     MatSliderModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

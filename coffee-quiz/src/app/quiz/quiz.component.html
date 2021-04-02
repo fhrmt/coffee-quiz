@@ -1,20 +1,30 @@
 <h1>Set a limit for thinking time:</h1>
-    <mat-slider
-      thumbLabel
-      [displayWith]="formatLabel"
-      tickInterval="1000"
-      min="1"
-      max="120"
-      defaultTabIndex="1"
-      (change)="updateTimer($event)"
-    ></mat-slider>
-    <div class="">
+<mat-slider
+  thumbLabel
+  [displayWith]="formatLabel"
+  tickInterval="1000"
+  min="1"
+  max="120"
+  defaultTabIndex="1"
+  (change)="updateTimer($event)"
+></mat-slider>
+<div class="">
   {{ timeLeft | formatTime }}
 </div>
 
 <h1 class="">Category: {{ category.title }}</h1>
 
 <h1 class="">{{ question }}</h1>
+
+<div>
+    <form [formGroup] = "formdata" (ngSubmit) = "answerCheck(formdata.value)" >
+       <input type = "text" class = "fortextbox" name = "givenAnswer" placeholder = "Type in your answer!" 
+          formControlName="givenAnswer">
+       <br/>
+       
+       <input type = "submit" class = "forsubmit" value = "Check!">
+    </form>
+ </div>
 
 <button (click)="getRandomQuestion()">Next Question</button>
 
