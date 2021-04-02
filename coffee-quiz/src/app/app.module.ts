@@ -8,6 +8,8 @@ import { QuizComponent } from './quiz/quiz.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormatTimePipe } from './format-time.pipe';
+import {MatSliderModule} from '@angular/material/slider'
+
 
 @NgModule({
   declarations: [AppComponent, QuizComponent, FormatTimePipe],
@@ -17,6 +19,7 @@ import { FormatTimePipe } from './format-time.pipe';
     BrowserAnimationsModule,
     HttpClientModule,
     MatProgressSpinnerModule,
+    MatSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

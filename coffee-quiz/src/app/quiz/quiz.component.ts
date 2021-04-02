@@ -47,5 +47,14 @@ export class QuizComponent implements OnInit {
   resetTimer() {
     this.timeLeft = this.timePerQuestion;
    }
+
+   formatLabel(value: number) {
+    return value + 's';
+  }
+
+  updateTimer(event: any) {
+    this.timePerQuestion = event.value;
+    this.resetTimer()
+  }
 }
 

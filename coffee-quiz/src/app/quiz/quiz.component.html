@@ -1,4 +1,14 @@
-<div class="">
+<h1>Set a limit for thinking time:</h1>
+    <mat-slider
+      thumbLabel
+      [displayWith]="formatLabel"
+      tickInterval="1000"
+      min="1"
+      max="120"
+      defaultTabIndex="1"
+      (change)="updateTimer($event)"
+    ></mat-slider>
+    <div class="">
   {{ timeLeft | formatTime }}
 </div>
 
