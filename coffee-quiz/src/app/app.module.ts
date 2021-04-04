@@ -8,14 +8,16 @@ import { QuizComponent } from './quiz/quiz.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormatTimePipe } from './format-time.pipe';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { DialogComponent } from './dialog/dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [AppComponent, QuizComponent, FormatTimePipe],
+  declarations: [AppComponent, QuizComponent, FormatTimePipe, DialogComponent],
+  entryComponents: [DialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -25,7 +27,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSliderModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionsService } from '../questions.service';
 import { timer, Subscription } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 
 
 @Component({
@@ -21,11 +23,11 @@ export class QuizComponent implements OnInit {
   isLoading: boolean = false;
   timeLeft: number = 0;
   countdown: any = Subscription;
-  timePerQuestion: number = 3;
+  timePerQuestion: number = 10;
   tick: number = 1000;
   formdata: any;
 
-  constructor(private QuizService: QuestionsService) {}
+  constructor(private QuizService: QuestionsService, private matDialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getRandomQuestion();
@@ -43,7 +45,6 @@ export class QuizComponent implements OnInit {
 
   getRandomQuestion() {
     this.isAnswered = false;
-
     this.isLoading = true;
     this.QuizService.getRandomQuestions().subscribe((response) => {
       this.formdata.reset();
@@ -76,9 +77,10 @@ export class QuizComponent implements OnInit {
     this.givenAnswer = data.givenAnswer;
     console.log(this.givenAnswer);
     console.log(this.baseAnswer);
+    
 
-    if (this.givenAnswer == null) {
-      alert('Type in your answer!');
+    if (this.givenAnswer == null || this.givenAnswer.length < 1 ) {
+      this.openDialog();
     } else if (this.givenAnswer.length > 0) {
       this.isAnswered = true;
       if (
@@ -97,13 +99,15 @@ export class QuizComponent implements OnInit {
         this.isCorrect = false;
       }
     }
-
-    // if (this.givenAnswer.length > 0) {
-    //   this.isAnswered = true;
-
-    //   this.givenAnswer =  this.givenAnswer.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '').replace(/(\s{2,})/g, ' ')
-
-    // console.log(this.givenAnswer);
-    // }
   }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    this.matDialog.open(DialogComponent, dialogConfig);
+  }
+
+//   openDialog() {
+//     this.dialog.open(DialogComponent);
+//   }
 }
+
