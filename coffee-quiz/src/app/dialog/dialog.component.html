@@ -1,11 +1,15 @@
-
 <div>
-<mat-dialog-content >
+  <div *ngIf="data.timeLeft == 0">
+    <div *ngIf="data.isCorrect == false">
+      <h2 mat-dialog-title>
+        Maybe next time!<br />The answer is: {{ data.baseAnswer }}
+      </h2>
+      <button class="mat-raised-button" (click)="close()">Next Question</button>
+    </div>
 
-    <h2 mat-dialog-title >Type in your answer!</h2>
-
-
-    <button class="mat-raised-button" (click)="close()">OK</button>
-    
-</mat-dialog-content>
+    <div *ngIf="data.isCorrect == true">
+      <h2 mat-dialog-title>Correct!</h2>
+      <button class="mat-raised-button" (click)="close()">Next Question</button>
+    </div>
+  </div>
 </div>

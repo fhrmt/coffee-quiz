@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionsService } from '../questions.service';
 import { timer, Subscription } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
 import { DialogComponent } from '../dialog/dialog.component';
-import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
-
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-quiz',
@@ -15,7 +13,6 @@ export class QuizComponent implements OnInit {
   question: string = '';
   baseAnswer: string = '';
   givenAnswer: string = '';
-  isAnswered: boolean = false;
   isCorrect: boolean = false;
   category = { id: 0, title: '' };
   questions: any;
@@ -25,29 +22,29 @@ export class QuizComponent implements OnInit {
   countdown: any = Subscription;
   timePerQuestion: number = 10;
   tick: number = 1000;
-  formdata: any;
 
-  constructor(private QuizService: QuestionsService, private matDialog: MatDialog) {}
+  constructor(
+    private QuizService: QuestionsService,
+    private matDialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getRandomQuestion();
-    this.formdata = new FormGroup({
-      givenAnswer: new FormControl(''),
-    });
-    console.log('formdata: ', this.formdata);
 
     this.countdown = timer(0, this.tick).subscribe(() => {
       if (this.timeLeft > 0) {
         --this.timeLeft;
+        if (this.timeLeft == 0) {
+          this.answerCheck();
+        }
       }
     });
   }
 
   getRandomQuestion() {
-    this.isAnswered = false;
     this.isLoading = true;
+
     this.QuizService.getRandomQuestions().subscribe((response) => {
-      this.formdata.reset();
       this.givenAnswer = '';
       this.questions = response;
       this.question = this.questions[this.index].question;
@@ -56,7 +53,7 @@ export class QuizComponent implements OnInit {
       this.isLoading = false;
       this.resetTimer();
 
-      console.log(response);
+      console.log(this.baseAnswer);
     });
   }
 
@@ -73,41 +70,46 @@ export class QuizComponent implements OnInit {
     this.resetTimer();
   }
 
-  answerCheck(data: any) {
-    this.givenAnswer = data.givenAnswer;
+  modelChange(str: string): void {
+    this.givenAnswer = str;
+    console.log('input: ' + this.givenAnswer);
+  }
+
+  answerCheck() {
     console.log(this.givenAnswer);
     console.log(this.baseAnswer);
-    
 
-    if (this.givenAnswer == null || this.givenAnswer.length < 1 ) {
-      this.openDialog();
-    } else if (this.givenAnswer.length > 0) {
-      this.isAnswered = true;
-      if (
-        this.givenAnswer
-          .toLowerCase()
-          .replace(/[^a-zA-Z0-9 ]/g, '')
-          .replace(/(\s{2,})/g, ' ') ==
+    if (
+      this.givenAnswer != null &&
+      this.givenAnswer
+        .toLowerCase()
+        .replace(/[^a-zA-Z0-9 ]/g, '')
+        .replace(/(\s{2,})/g, ' ') ==
         this.baseAnswer
           .toLowerCase()
           .replace(/[^a-zA-Z0-9 ]/g, '')
           .replace(/(\s{2,})/g, ' ')
-      ) {
-        this.isCorrect = true;
-        alert('Correct!');
-      } else {
-        this.isCorrect = false;
-      }
+    ) {
+      this.isCorrect = true;
+    } else {
+      this.isCorrect = false;
+    }
+    if (this.timeLeft == 0) {
+      this.answerDialog();
     }
   }
 
-  openDialog() {
+  answerDialog() {
     const dialogConfig = new MatDialogConfig();
-    this.matDialog.open(DialogComponent, dialogConfig);
+
+    dialogConfig.data = {
+      timeLeft: this.timeLeft,
+      baseAnswer: this.baseAnswer,
+      isCorrect: this.isCorrect,
+    };
+    let dialogRef = this.matDialog.open(DialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(() => {
+      this.getRandomQuestion();
+    });
   }
-
-//   openDialog() {
-//     this.dialog.open(DialogComponent);
-//   }
 }
-

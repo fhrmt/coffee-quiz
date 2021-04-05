@@ -16,7 +16,7 @@
 
 <h1 class="">{{ question }}</h1>
 
-<div>
+<!-- <div>
   <form [formGroup]="formdata" (ngSubmit)="answerCheck(formdata.value)">
     <input
       type="text"
@@ -28,14 +28,13 @@
     <br />
 
     <input type="submit" class="forsubmit" value="Check!" />
-<!-- <button type="submit" class="forsubmit" mat-button (click)="openDialog()">Check!</button> -->
-
   </form>
-</div>
+</div> -->
 
-<button (click)="getRandomQuestion()">Next Question</button>
+<input [ngModel]="givenAnswer" (ngModelChange)="modelChange($event)" placeholder="Type in your answer!"/>
+
+<button (click)="getRandomQuestion()">Skip Question</button>
 
 <div *ngIf="isLoading">
   <mat-spinner></mat-spinner>
 </div>
-

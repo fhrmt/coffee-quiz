@@ -14,6 +14,8 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogComponent } from './dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule }   from '@angular/forms';
+
 
 @NgModule({
   declarations: [AppComponent, QuizComponent, FormatTimePipe, DialogComponent],
@@ -29,6 +31,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatInputModule,
     ReactiveFormsModule,
     MatDialogModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
